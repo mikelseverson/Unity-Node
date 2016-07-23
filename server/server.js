@@ -13,7 +13,7 @@ io.on('connection', (socket) => {
   for(i=0; i < playerCount; i++) {
     socket.emit('spawn');
     console.log('sending spawn to new player')
-  }
+  };
 
   socket.on('move', () => {
       console.log('client moved');
