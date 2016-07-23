@@ -18,4 +18,9 @@ io.on('connection', (socket) => {
   socket.on('move', () => {
       console.log('client moved');
   });
+
+  socket.on('disconnect', () => {
+    console.log('client disconnected');
+    playerCount--;
+  })
 });
