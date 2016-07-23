@@ -4,7 +4,7 @@ console.log('server started');
 
 io.on('connection', (socket) => {
   console.log('client spawned');
-  soket.broadcast.emit('spawn');
+  socket.broadcast.emit('spawn');
 
   socket.on('move', () => {
       console.log('client moved');
