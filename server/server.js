@@ -1,22 +1,29 @@
-var io = require('socket.io')(process.env.PORT || 3000);
+"use strict";
+
+const PORT = process.env.PORT || 3000
+const io = require('socket.io')(PORT);
+const shortid = require('shortid');
 
 console.log('server started');
 
 var playerCount = 0;
 
 io.on('connection', (socket) => {
-  console.log('client connected, broadcasting spawn');
+  let thisClientId = shortid.generate();
 
-  socket.broadcast.emit('spawn');
+  console.log('client connected, broadcasting spawn, id: ', thisClientId);
+
+  socket.broadcast.emit('spawn', {id: thisClientId});
   playerCount++;
 
-  for(i=0; i < playerCount; i++) {
-    socket.emit('spawn');
+  for(let i=0; i < playerCount; i++) {
     console.log('sending spawn to new player')
+    socket.emit('spawn');
   };
 
-  socket.on('move', () => {
-      console.log('client moved');
+  socket.on('move', (data) => {
+      console.log('client moved', JSON.stringify(data));
+      socket.broadcast.emit('move', data);
   });
 
   socket.on('disconnect', () => {
