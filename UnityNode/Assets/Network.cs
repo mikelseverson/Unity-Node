@@ -22,19 +22,29 @@ public class Network : MonoBehaviour {
     Debug.Log("Connected");
   }
   void OnSpawned (SocketIOEvent e) {
-    Debug.Log("spawned");
+    Debug.Log("spawned: " + e.data);
     var player = Instantiate(playerPrefab);
 
     players.Add(e.data["id"].ToString(), player);
     Debug.Log("count: " + players.Count);
   }
   void OnMove (SocketIOEvent e) {
-    Debug.Log("player is moving " + e.data);
+    var id = e.data ["id"].ToString();
+    var player = players [id];
+    var x = GetFloatFromJson(e.data, "x");
+    var y = GetFloatFromJson(e.data, "y");
+    var pos = new Vector3 (x, 0, y);
+    var navigatePos = player.GetComponent<NavigatePosition> ();
 
-    var id = e.data ["id"];
-    Debug.Log (id);
+    Debug.Log("player is moving: " + player.name);
+
+    navigatePos.NavigateTo (pos);
   }
   void OnRegistered (SocketIOEvent e) {
     Debug.Log("registered id: " + e.data);
   }
+  float GetFloatFromJson (JSONObject data, string key) {
+    return float.Parse(data [key].ToString().Replace("\"", ""));
+  }
+
 }

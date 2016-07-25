@@ -22,6 +22,7 @@ io.on('connection', (socket) => {
   };
 
   socket.on('move', (data) => {
+      data.id = thisClientId;
       console.log('client moved', JSON.stringify(data));
       socket.broadcast.emit('move', data);
   });
