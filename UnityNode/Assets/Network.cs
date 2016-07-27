@@ -33,7 +33,7 @@ public class Network : MonoBehaviour {
     var player = players [id];
     var x = GetFloatFromJson(e.data, "x");
     var y = GetFloatFromJson(e.data, "y");
-    var pos = new Vector3 (x, 0, y);
+    var pos = new Vector3 (x, y);
     var navigatePos = player.GetComponent<NavigatePosition> ();
 
     Debug.Log("player is moving: " + player.name);
