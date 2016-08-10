@@ -9,3 +9,5 @@ Since I don't have any experience with unity - The project is not scoped out.
 There is one thing I do know about the project...
 
 Multiplayer is a necessity.
+
+Project put on hold until Aug 15.
